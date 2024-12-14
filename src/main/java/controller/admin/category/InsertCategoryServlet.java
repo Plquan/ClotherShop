@@ -15,30 +15,22 @@ public class InsertCategoryServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static final String MANAGE_CATEGORY_CONTROLLER = "ManageCategoryServlet";
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String url = MANAGE_CATEGORY_CONTROLLER;
-        CategoryDAO cDao = new CategoryDAO();
-        String Name = request.getParameter("categoryName");
-        if (Name != null) {
-            cDao.insertCategory(Name);
-        }
-        request.getRequestDispatcher(url).forward(request, response);
-    }
-
+    private static final String INSERT_PAGE = "admin/admin_categories_insert.jsp";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher(INSERT_PAGE).forward(request, response);
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        CategoryDAO cDao = new CategoryDAO();
+        String Name = request.getParameter("name");
+        if (Name != null) {
+            cDao.insertCategory(Name);
+        }
+        response.sendRedirect(MANAGE_CATEGORY_CONTROLLER);   
     }
 
 

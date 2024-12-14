@@ -16,8 +16,7 @@ public class ManageCategoryServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static final String MANAGE_CATEGORY_PAGE = "admin/admin_categories.jsp";
-    private static final String INSERT_CATEGORY_PAGE = "admin/admin_categories_insert.jsp";
-    private static final String EDIT_CATEGORY_PAGE = "admin/admin_categories_edit.jsp";
+
 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -26,22 +25,8 @@ public class ManageCategoryServlet extends HttpServlet {
         String url = MANAGE_CATEGORY_PAGE;
         try {
             CategoryDAO cDao = new CategoryDAO();
-            String action = request.getParameter("action");
-            if(action == null) {
             	List<CategoryDTO> list = cDao.getData();
                 request.setAttribute("LIST_CATEGORIES", list);
-            }
-            else if (action.equals("Insert")) {
-                url = INSERT_CATEGORY_PAGE;              
-            }
-            else if(action.equals("Edit")) {
-            	url = EDIT_CATEGORY_PAGE;
-            	int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            	CategoryDTO category = cDao.getCategoryById(categoryId);
-            	request.setAttribute("categoryId", category.getCategoryId());
-                request.setAttribute("categoryName", category.getCategoryName());
-            	
-            }               
         } catch (Exception ex) {
             log("ManageCategoryServlet error:" + ex.getMessage());
         } finally {

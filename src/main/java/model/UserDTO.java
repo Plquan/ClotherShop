@@ -10,25 +10,33 @@ public class UserDTO {
     private String password;
     private String address;
     private String phone;
-    private int roleID;
-    private boolean status;
+    private String role;
+    private String status;
 
     public UserDTO() {
     }
 
-    public UserDTO(int id, String email, String avatar, String userName, String password, String address, String phone, int roleID, boolean status) {
+    public UserDTO(int id, String email, String avatar, String userName, String password, String address, String phone, String role, String status) {
         this.id = id;
         this.email = email;
         this.avatar = avatar;
         this.userName = userName;
         this.password = password;
-        this.roleID = roleID;
+        this.role = role;
         this.status = status;
         this.address = address;
         this.phone = phone;
     }
 
-    public int getId() {
+    public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public int getId() {
         return id;
     }
 
@@ -60,23 +68,18 @@ public class UserDTO {
         this.password = password;
     }
 
-    public int getRoleID() {
-        return roleID;
-    }
 
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
-    }
 
-    public boolean isStatus() {
-        return status;
-    }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+    public String getStatus() {
+		return status;
+	}
 
-    public String getAvatar() {
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getAvatar() {
         return avatar;
     }
 

@@ -18,7 +18,7 @@
                    
                     <div class="row">
                         <div class="col">
-                            <h3 class="page-title">Thêm mới</h3>
+                            <h3 class="page-title">Chỉnh sửa</h3>
                         </div>
                     </div>
                 </div>
@@ -36,18 +36,13 @@
                             <div class="card-body">
                              <h3 style="color: green; text-align: center; margin: 20px 0">${requestScope.mess}</h3>
                             <h3 style="color: red; text-align: center; margin: 20px 0">${requestScope.error}</h3>
-                                <form action="EditCategoryServlet" method="post">
-                                                              
-                                          <div class="form-group row">
-                                        <label class="col-form-label col-md-2">Mã danh mục</label>
-                                        <div class="col-md-10">
-                                            <input type="text" readonly name="categoryId" value="${categoryId}"  class="form-control"   placeholder="">
-                                        </div>
-                                    </div>
+                                <form action="EditCategoryServlet" method="post">                                                                                   
+                                         <input type="hidden" readonly name="id" value="${categoryId}">
+                                    
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2">Tên danh mục</label>
                                         <div class="col-md-10">
-                                            <input type="text" name="categoryName" value="${categoryName}"  class="form-control" required autofocus placeholder="">
+                                            <input type="text" name="name" value="${name}"  class="form-control" required autofocus placeholder="">
                                         </div>
                                     </div>
                                                                       
@@ -57,9 +52,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-        
-            
+                </div>                 
             </div>
         </div>
 	</div>

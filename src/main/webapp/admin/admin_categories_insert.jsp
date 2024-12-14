@@ -41,19 +41,16 @@
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-2">Tên danh mục</label>
                                         <div class="col-md-10">
-                                            <input type="text" name="categoryName" class="form-control" required autofocus placeholder="">
+                                            <input type="text" name="name" class="form-control" required autofocus placeholder="">
                                         </div>
-                                    </div>
-                                                                      
+                                    </div>                                            
                                      <a href="ManageCategoryServlet" class="btn btn-primary buttonedit ml-2">Quay lại</a>
                                     <button type="submit" class="btn btn-primary buttonedit">Thêm mới</button>
                                 </form>
                             </div>
                         </div>
                     </div>
-                </div>
-        
-            
+                </div>          
             </div>
         </div>
 	</div>
