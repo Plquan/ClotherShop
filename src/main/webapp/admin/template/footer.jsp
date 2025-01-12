@@ -7,3 +7,4 @@
 	<script src="admin/assets/plugins/morris/morris.min.js"></script>
 	<script src="admin/assets/js/chart.morris.js"></script>
 	<script src="admin/assets/js/script.js"></script>
+	 <script src="admin/assets/js/axios.min.js"></script>

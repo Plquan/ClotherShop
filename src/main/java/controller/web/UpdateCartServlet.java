@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -26,7 +28,7 @@ public class UpdateCartServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	    resp.setContentType("application/json");
 	    resp.setCharacterEncoding("UTF-8");
-
+		 ProductDAO dao = new ProductDAO();
 	    HttpSession session = req.getSession();
 
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));
@@ -46,18 +48,23 @@ public class UpdateCartServlet extends HttpServlet{
 
 	    for (CartItem updatedItem : updatedItems) {
 	        for (CartItem item : cart) {
-	            if (item.getId() == updatedItem.getId()) {
-	                if (item.getQuantity() != updatedItem.getQuantity()) {
-	                    item.setQuantity(updatedItem.getQuantity());  
-	                }
+	            if (item.getId() == updatedItem.getId()) {	                     	
+						try {
+							int cstock = dao.getById(updatedItem.getId()).getStock();
+							if(updatedItem.getQuantity() <= cstock) {
+		                    	 item.setQuantity(updatedItem.getQuantity());  
+							}
+							else {
+								session.setAttribute("error", "Mã sản phẩm "+ updatedItem.getId()+ ": Số lượng đặt trong giỏ hàng không được vượt quá tồn kho.");
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}                
 	                break; 
 	            }
 	        }	       
 	    }
-
-
 	    session.setAttribute("cart", cart);
-
 	    PrintWriter out = resp.getWriter();
 	    Map<String, Object> result = new HashMap<>();
 	    result.put("success", true);

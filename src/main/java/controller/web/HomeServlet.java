@@ -22,7 +22,7 @@ public class HomeServlet extends HttpServlet {
 	        try {
 	            ProductDAO pDao = new ProductDAO();
 	            List<ProductDTO> listProducts = pDao.getAll();
-	            	req.setAttribute("LIST_PRODUCTS", listProducts);	                  
+	            req.setAttribute("LIST_PRODUCTS", listProducts);	                  
 	        } catch (Exception ex) {
 	            log("ManageProductServlet error:" + ex.getMessage());
 	        } 

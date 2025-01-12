@@ -5,6 +5,8 @@
 <html lang="en">
 <jsp:include page="template/resource.jsp"></jsp:include>
 <body>
+<input type="hidden" id="sessionError" value="${sessionScope.error}" />
+ <c:remove var="error" scope="session" />
 
 	<div class="site-wrap">
 		<jsp:include page="template/header.jsp"></jsp:include>
@@ -29,6 +31,7 @@
 					<div class="col-md-6">
 						<h2 class="text-black">${name }</h2>
 						<p>${description}</p>
+						  <p class="mb-4">Tồn kho: ${stock}</p>
 						<p>
 							<strong class="text-primary h4">${price} đ</strong>
 						</p>
@@ -188,5 +191,11 @@
         return true;
     }
 
+    const sessionError = document.getElementById('sessionError').value;
+    if (sessionError) {
+        toastr.warning(sessionError)
+    } else {
+        console.log("No session error.");
+    }
   </script>
 </html>

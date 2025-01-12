@@ -5,6 +5,6 @@
   <script src="js/owl.carousel.min.js"></script>
   <script src="js/jquery.magnific-popup.min.js"></script>
   <script src="js/aos.js"></script>
-    <script src="js/axios.min.js"></script>
+  <script src="js/axios.min.js"></script>
   <script src="js/toastr.min.js"></script>
   <script src="js/main.js"></script>

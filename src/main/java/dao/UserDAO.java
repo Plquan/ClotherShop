@@ -12,7 +12,7 @@ import ultils.DbContext;
 
 public class UserDAO extends DbContext {
 	
-	 private static final String LOGIN = "SELECT * FROM Users WHERE (username=? OR email = ?) AND password=? and status=1";
+	 private static final String LOGIN = "SELECT * FROM Users WHERE  email = ? AND password=?";
 
 	    private static final String GET_DATA = "SELECT * FROM Users WHERE status = 1 Order by roleid asc";
 	    private static final String GET_TOTAL_USER = "SELECT * FROM users  Order by userName asc";
@@ -32,7 +32,6 @@ public class UserDAO extends DbContext {
 	    private static final String REGISTER_USER = "INSERT INTO Users "
 	            + "(email, avatar, userName, password, address, phone, role, status) "
 	            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
 	    
 
 	  
@@ -104,9 +103,7 @@ public class UserDAO extends DbContext {
 	        }
 	        return result;
 	    }
-	    
-	  
-    
+	      
 	    public void registerUser(UserDTO user) throws SQLException {
 	        Connection conn = null;
 	        PreparedStatement ptm = null;
@@ -138,6 +135,37 @@ public class UserDAO extends DbContext {
 	                conn.close();
 	            }
 	        }
+	    }
+	    
+	    public UserDTO Login(String cemail,String Pass) {
+	    	UserDTO user = null;
+	    	 Connection conn = null;
+		        PreparedStatement ptm = null;
+		        ResultSet rs = null;
+		        try {
+		        	 conn = getConnection();
+		        	 ptm = conn.prepareStatement(LOGIN);
+		        	 ptm.setString(1,cemail);
+		        	 ptm.setString(2,Pass);
+		        	  rs = ptm.executeQuery();        	 
+		        	 if (rs.next()) {
+		        		 int id = rs.getInt("id");
+		                    String email = rs.getString("email");
+		                    String avatar = rs.getString("avatar");
+		                    String userName = rs.getString("username");
+		                    String password = rs.getString("password");
+		                    String address = rs.getString("address");
+		                    String phone = rs.getString("phone");
+		                    String role = rs.getString("role");
+		                    String status = rs.getString("status");
+		                    user = new UserDTO(id, email, avatar, userName, password, address, phone, role, status);
+		             }
+		        	 
+				} catch (Exception e) {
+				
+				}
+			return user;
+	    	
 	    }
 	    
 	    public void deleteUser(String uid) throws SQLException {
@@ -269,4 +297,6 @@ public class UserDAO extends DbContext {
 	            }
 	        }
 	    }
+
+
 }

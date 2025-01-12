@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
 <!DOCTYPE html>
 <html lang="en">
  <jsp:include page="template/resource.jsp"></jsp:include>   
@@ -63,7 +64,7 @@
                   <div class="block-4-text p-4">
                     <h3><a  href="ProductDetailServlet?pId=${u.id}">${u.name}</a></h3>
                     <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">Giá tiền: ${u.price}đ</p>
+                    <p class="text-primary font-weight-bold">${u.price} đ</p>
                   </div>
                 </div>
               </div>

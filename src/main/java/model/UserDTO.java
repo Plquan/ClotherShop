@@ -103,6 +103,23 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Username: " + userName + ", Email: " + email + ", Phone: " + phone;
+    }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,11 @@
 package controller.web;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,6 +20,8 @@ public class CartServlet extends HttpServlet {
     private static final String CART_PAGE = "cart.jsp";
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		 ProductDAO dao = new ProductDAO();
+		 String url = CART_PAGE;
 		  HttpSession session = req.getSession();
 		  int id = Integer.parseInt(req.getParameter("id"));
 		  String name = req.getParameter("name");
@@ -35,7 +39,20 @@ public class CartServlet extends HttpServlet {
 		   boolean itemExists = false;
 	        for (CartItem item : cart) {
 	            if (item.getId() == id) {
-	                item.setQuantity(item.getQuantity() + quantity);
+	            	
+	            	try {
+						int cstock = dao.getById(id).getStock();
+						if(item.getQuantity() + quantity <= cstock) {
+							item.setQuantity(item.getQuantity() + quantity);
+						}
+						else {
+							session.setAttribute("error", " số lượng đặt trong giỏ hàng không được vượt quá tồn kho.");
+							url = "ProductDetailServlet?pId=" + id;
+						}
+					} catch (SQLException e) {				
+						e.printStackTrace();
+					}
+	                
 	                itemExists = true;
 	                break;
 	            }
@@ -44,7 +61,7 @@ public class CartServlet extends HttpServlet {
 	            cart.add(newItem);
 	        }
 	        session.setAttribute("cart", cart);
-	        resp.sendRedirect(CART_PAGE);
+	        resp.sendRedirect(url);
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		 
