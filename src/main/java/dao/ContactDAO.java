@@ -19,6 +19,7 @@ public class ContactDAO extends DbContext {
 	private static final String UPDATE = "UPDATE contact SET name = ? WHERE id = ?";
 	private static final String GET_BY_ID = "SELECT * FROM contact WHERE id = ?";
 	private static final String UPDATE_STATUS = "UPDATE contact SET status = ? WHERE id = ?";
+	private static final String GET_PENDING_CONTACT = "select * from contact where statuc = 'pending'";
 	
 	public List<ContactDTO> GetAll() throws SQLException{
 		List<ContactDTO> contacts = new ArrayList<>();
@@ -97,5 +98,34 @@ public class ContactDAO extends DbContext {
                ptm.executeUpdate();
            }
        }
-	
+       public int GetCountContact() {
+    	   Connection con = null;
+           PreparedStatement ptm = null;
+           ResultSet rs = null;
+           int count = 0;
+           try {
+               con = getConnection();
+               if (con != null) {
+                   ptm = con.prepareStatement(GET_PENDING_CONTACT);
+                   rs = ptm.executeQuery();
+
+                   if (rs.next()) {
+                       count = rs.getInt("total");
+                   }
+               }
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+           return count;
+       }
+       public void deleteContact(String cid) throws SQLException {
+           Connection conn = null;
+           PreparedStatement ptm = null;
+               conn = getConnection();
+               if (conn != null) {
+                   ptm = conn.prepareStatement(DELETE);
+                   ptm.setString(1, cid);
+                   ptm.executeUpdate();
+               }
+       }
 }

@@ -23,8 +23,12 @@ public class OrderDAO extends DbContext{
 	private static final String UPDATE_STOCK = "UPDATE products p join orderitem o on o.productId = p.id\r\n"
 			+ "set p.stock = o.quantity + p.stock\r\n"
 			+ "where o.orderId = ?";
+	private static final String GET_ORDER_COUNT = "select count(*) as total from orders";
+	private static final String Amount_Report = "SELECT sum(totalPrice) as totalAmount from orders WHERE paymentStatus = 'success'";
+	private static final String CANCEL_ORDER = "select count(*) as cancelOrder from orders where status = 'cancelled'";
+	private static final String UPDATE_PRODUCT_STOCK = "Update products set stock = ? where id = ? ";
 	
-	public String CreateOrder(OrderDTO dto) {
+ 	public String CreateOrder(OrderDTO dto) {
 		  Connection con = null;
 	        PreparedStatement ptm = null;
 	        try {
@@ -159,6 +163,82 @@ public class OrderDAO extends DbContext{
         return orders;
     }
 
+   public int GetCountOrder() {
+	   Connection con = null;
+       PreparedStatement ptm = null;
+       ResultSet rs = null;
+       int count = 0;
+       try {
+           con = getConnection();
+           if (con != null) {
+               ptm = con.prepareStatement(GET_ORDER_COUNT);
+               rs = ptm.executeQuery();
 
+               if (rs.next()) {
+                   count = rs.getInt("total");
+               }
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return count;
+   }
+
+   public int GetTotalAmount() {
+	   Connection con = null;
+       PreparedStatement ptm = null;
+       ResultSet rs = null;
+       int totalAmount = 0;
+       try {
+           con = getConnection();
+           if (con != null) {
+               ptm = con.prepareStatement(Amount_Report);
+               rs = ptm.executeQuery();
+
+               if (rs.next()) {
+            	   totalAmount = rs.getInt("totalAmount");
+               }
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return totalAmount;
+   }
+   
+   public int GetCancelOrder() {
+	   Connection con = null;
+       PreparedStatement ptm = null;
+       ResultSet rs = null;
+       int count = 0;
+       try {
+           con = getConnection();
+           if (con != null) {
+               ptm = con.prepareStatement(CANCEL_ORDER);
+               rs = ptm.executeQuery();
+
+               if (rs.next()) {
+                   count = rs.getInt("cancelOrder");
+               }
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return count;
+   }
+   
+   public void UpdateProductStock(int Id,int stock) throws SQLException {
+  	 Connection conn = null;
+       PreparedStatement ptm = null;
+           conn = getConnection();
+           if (conn != null) {
+               ptm = conn.prepareStatement(UPDATE_PRODUCT_STOCK);     
+               ptm.setInt(Id, stock);
+               ptm.setInt(2, Id);
+               ptm.executeUpdate();
+           }
+	        
+  }
+   
+   
 
 }

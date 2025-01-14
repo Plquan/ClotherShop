@@ -113,7 +113,7 @@
                                     <a onclick="sendReply(${u.id},'${u.email}')" type="button" class="btn btn-icon btn-success">
                                     <i class="fa fa-reply"></i>
                                     </a>
-                                  <a onclick="deleteRoomType(${u.id})" type="button" class="btn btn-icon btn-danger" data-toggle="modal"
+                                  <a onclick="confirmDelete('delete_asset',${u.id})" type="button" class="btn btn-icon btn-danger" data-toggle="modal"
                                   data-target="#delete_asset">
                                   <i class="fa fa-trash"></i>
                                   </a>    
@@ -167,7 +167,7 @@
                             <textarea style="height: 200px;" class="form-control" type="text" name="replyMessage" required
                                 placeholder="..."> </textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary buttonedit ml-2">Gửi phản
+                        <button type="submit" onclick="confirmResponse()" class="btn btn-primary buttonedit ml-2">Gửi phản
                             hồi</button>
 
                     </form>
@@ -192,7 +192,7 @@
 				+ '<h3 class="delete_class">Bạn có chắc chắn muốn xóa ?</h3>'
 				+ '<div class="m-t-20">'
 				+ '<a href="#" class="btn btn-white" data-dismiss="modal">Hủy</a>'
-				+ '<a href="DeleteProductServlet?pId=' + pid
+				+ '<a href="DeleteContactServlet?cid=' + pid
 				+ '" class="btn btn-danger">Xóa</a>' + '</div>' + '</div>'
 				+ '</div' + '</div>' + '</div>';
 		let result = modalElement.innerHTML = modal;
@@ -215,6 +215,11 @@
 	  } else {
 	      console.log("No session error.");
 	  }
+
+	  function confirmResponse(){
+		  $('#replyContact').modal('hide'); 
+		  }
+	  
 		
 </script>
 </html>

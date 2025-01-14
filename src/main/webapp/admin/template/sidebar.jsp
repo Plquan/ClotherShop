@@ -4,7 +4,7 @@
 			<div class="sidebar-inner slimscroll">
 				<div id="sidebar-menu" class="sidebar-menu">
 					<ul>
-						<li class="active"> <a href="index.html"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
+						<li class="active"> <a href="AdminServlet"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
 						<li class="list-divider"></li>
 					  <li> <a href="ManageUserServlet"><i class="fas fa-user"></i> <span>Tài khoản</span></a> </li>
 			

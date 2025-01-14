@@ -83,6 +83,7 @@
 												<th>Tên sản phẩm</th>
 												<th>Ảnh bìa</th>
 												<th>Giá tiền</th>
+												<th>Tồn kho</th>
 												<th>Trạng thái</th>
 												<th class="text-right">Chức năng</th>
 											</tr>
@@ -101,6 +102,8 @@
 														</div>
 													</td>
 													<td>${u.price}</td>
+													<td>${u.stock}</td>
+													
 													<td>${u.status}</td>
 													<td class="text-right"><a
 														class="btn btn-primary btn-sm edit"

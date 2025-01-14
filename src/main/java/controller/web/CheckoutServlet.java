@@ -56,13 +56,14 @@ public class CheckoutServlet extends HttpServlet {
           OrderDTO dto = new OrderDTO(0,code,userName,email,phone,address,note,totalPrice,createdAt,paymentMethod,"pending",status);      
       
           String newcode = odao.CreateOrder(dto);
-          int OrderId = odao.GetOrderByCode(newcode).getId();
+          OrderDTO order = odao.GetOrderByCode(newcode);
+          int OrderId = order.getId();
 	      
 	      HttpSession session = req.getSession();
 	      List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 	   
 	   if (cart == null || cart.isEmpty()) {
-           resp.getWriter().println("Cart is empty. No products to save.");
+           resp.getWriter().println("Giỏ hàng trống");
            return;
        }
 	   List<OrderItemDTO> orderItems = new ArrayList<>();
@@ -78,6 +79,8 @@ public class CheckoutServlet extends HttpServlet {
 				}
 				else {
 					oidao.AddOrderItem(item);
+					int updatedStock = cStock - cartItem.getQuantity();
+					odao.UpdateProductStock(cartItem.getId(), updatedStock);
 				}
 			} catch (SQLException e) {				
 				e.printStackTrace();

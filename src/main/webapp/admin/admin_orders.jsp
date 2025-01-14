@@ -99,10 +99,11 @@
                                     <td><button type="button" class="btn 
                                     <c:choose>
     <c:when test="${o.paymentStatus == 'success'}">
-        btn-warning
+          btn-primary
     </c:when>
     <c:when test="${o.paymentStatus == 'pending'}">
-        btn-primary
+     
+         btn-warning
     </c:when>
     <c:otherwise>
         btn-info
@@ -112,10 +113,11 @@
                                     ">
                                     <c:choose>
     <c:when test="${o.paymentStatus == 'success'}">
-        <i class="fas fa-circle-notch fa-spin"></i>
+      <i class="fa fa-check"></i>
     </c:when>
     <c:when test="${o.paymentStatus == 'pending'}">
-        <i class="fa fa-check"></i>
+       
+           <i class="fas fa-circle-notch fa-spin"></i>
     </c:when>
     <c:otherwise>
         <i class=""></i>
@@ -171,7 +173,39 @@
 			</div>
 			<div id="delete_asset" class="modal fade delete-modal" role="dialog">
 			</div>
-
+    <div id="booking_detail" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content modal-md">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông tin hóa đơn</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label style="font-weight: 500;">Họ tên:</label><span class="text-center" style="margin-left: 10px;" id="userName"></span>                         
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: 500;">Số điện thoại:</label><span class="text-center" style="margin-left: 10px;" id="phone"></span>                         
+                        </div>
+                        <div class="form-group">
+                            <label style="font-weight: 500;">Email:</label><span class="text-center" style="margin-left: 10px;" id="email"></span>                         
+                        </div>        
+                        <div class="form-group">
+                            <label style="font-weight: 500;">Tổng tiền:</label><span class="text-center" style="margin-left: 10px;" id="totalPrice"></span>                         
+                        </div>
+                        <div class="form-group">
+                            <label  style="font-weight: 500;">Ghi chú:</label>                         
+                                <textarea style="height: 80px;" class="form-control" readonly type="text" id="note"> </textarea>                        
+                        </div>
+                        <!-- <div class="m-t-20 text-center">
+                            <button class="btn btn-primary submit-btn">Create Event</button>
+                        </div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 		</div>
 	</div>
 	<jsp:include page="template/footer.jsp"></jsp:include>
@@ -204,6 +238,7 @@ function updateStatus(orderId,status){
     axios.post('http://localhost:8080/Doan/UpdateStatusOrderServlet',data)
     .then(function(response){
         console.log(response)    
+      
        
     }) .catch(function (error) {
         console.error('Lỗi khi cập nhật dữ liệu:', error);
